@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Larry's Laptop Land</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body style="background-color:grey;" onload="checkAdmin();">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button id="mobileButton" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-link" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">Larry's Laptop Land</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="nav-link">
+          <ul class="nav navbar-nav">
+            <li><a href="../catalog">Catalog</a></li>
+            <li><a href="../survey">Survey</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li id="adminPage"><a href='../adminPage'>Admin Page</a></li>
+            <li id="logoutIndicator"><a href="#" data-toggle="modal" data-target="#logout">Logout</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <!ADMIN NAVBAR>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-8 col-xs-offset-2">
+            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown" aria-expanded="false">Laptops
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </div>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown" aria-expanded="false">Survey
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="surveyResults">Survey Results</a></li>
+                  <li><a href="#">Modify Survey</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Update Users About Sale</a></li>
+                </ul>
+              </div>
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown" aria-expanded="false">Other
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <br>
+
+    <div class="container-fluid">
+      <form id="modifySurvey" onsubmit="return surveyQuestionChange();">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group panel">
+              <div id="questionsInUse">
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group panel">
+              <div id="questionsNotInUse">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Change</button>
+            <button type="reset" class="btn" value="reset">Reset</button>
+          </div>
+        </div>
+      </form>
+
+
+    <!LOGOUT>
+    <div class="container">
+      <div class="modal" id="logout" role="dialog" aria-labelledby="user_logout"aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Logout</h4>
+            </div>
+            <div class="modal-body">
+              <h3>Are you sure you wish to log out?</h3>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" value="No"
+              data-dismiss="modal">No</button>
+              <button id="logoutbtn" type="button" class="btn btn-primary" onclick="logout()">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script type="text/javascript" src="adminScripts.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $.ajax({
+          url:"questionsInUse.php",
+          success:function(result){
+            $('#questionsInUse').html(result);
+          }
+        });
+      });
+
+      $(document).ready(function(){
+        $.ajax({
+          url:"questionsNotInUse.php",
+          success: function(results){
+            $('#questionsNotInUse').html(results);
+          }
+        });
+      });
+
+
+
+    </script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  </body>
+</html>
